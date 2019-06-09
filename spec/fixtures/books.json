@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "created_at": "2019-06-09T00:30:21+00:00",
+        "page_count": 598,
+        "publication_date": "2019-05-13",
+        "summary": "It does not do to dwell on dreams and forget to live.",
+        "title": "Crucio-1",
+        "updated_at": "2019-06-09T00:30:21+00:00"
+      },
+      "id": "1",
+      "type": "books"
+    },
+    {
+      "attributes": {
+        "created_at": "2019-06-09T00:30:21+00:00",
+        "page_count": 928,
+        "publication_date": "2019-05-13",
+        "summary": "We could all have been killed - or worse, expelled.",
+        "title": "Expelliarmus-2",
+        "updated_at": "2019-06-09T00:30:21+00:00"
+      },
+      "id": "2",
+      "type": "books"
+    },
+    {
+      "attributes": {
+        "created_at": "2019-06-09T00:30:21+00:00",
+        "page_count": 194,
+        "publication_date": "2019-05-13",
+        "summary": "Of course it is happening inside your head, Harry, but why on earth should that mean that it is not real?",
+        "title": "Lumos-3",
+        "updated_at": "2019-06-09T00:30:21+00:00"
+      },
+      "id": "3",
+      "type": "books"
+    }
+  ],
+  "meta": {}
+}
