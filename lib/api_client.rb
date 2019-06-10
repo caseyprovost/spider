@@ -1,47 +1,24 @@
 class ApiClient
-  AUTH_SERVICE_URL = 'https://master-auth.herokuapp.com'
-  BOOK_SERVICE_URL = 'https://ruby-bookshelf.herokuapp.com'
+  BOOK_SERVICE_URL = ENV.fetch('BOOKSHELF_API_URL')
 
-  attr_accessor :auth_token
-  attr_reader :email
-  attr_reader :password
-
-  def initialize(email, password)
-    @email = email
-    @password = password
-  end
-
-  def login
-    response = HTTParty.post("#{AUTH_SERVICE_URL}/users/sign_in", {
-      body: {
-        user: {
-          email: email,
-          password: password
-        }.to_json
-      },
-      headers: {
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json'
-      }
+  def books(jwt_token)
+    response = HTTParty.get("#{BOOK_SERVICE_URL}/v1/books", headers: {
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json',
+      'Authorization' => jwt_token
     })
 
-    self.auth_token = response.headers['Authorization']
-    response
-  end
-
-  def books
-    with_authorization do
-      HTTParty.get("#{BOOK_SERVICE_URL}/v1/books", headers: {
-        'Accept' => 'application/vnd.api+json',
-        'Content-Type' => 'application/vnd.api+json'
-      })
-    end
+    parsed_response = JSON.parse(response.body)
+    normalize_json_api_collection(parsed_response['data'])
   end
 
   private
 
-  def with_authorization
-    login if auth_token.blank?
-    yield
+  def normalize_json_api_collection(collection)
+    collection.map do |item|
+      {
+        'id' => item['id'],
+      }.merge(item['attributes'])
+    end
   end
 end
