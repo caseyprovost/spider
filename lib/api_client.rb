@@ -16,8 +16,9 @@ class ApiClient
 
   def normalize_json_api_collection(collection)
     collection.map do |item|
-      {
-        'id' => item['id'],
+      data = {
+        'id'        => item['id'],
+        'publisher' => item['attributes'].delete('publisher')['attributes']
       }.merge(item['attributes'])
     end
   end
