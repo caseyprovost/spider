@@ -16,10 +16,17 @@ class ApiClient
 
   def normalize_json_api_collection(collection)
     collection.map do |item|
-      data = {
-        'id'        => item['id'],
-        'publisher' => item['attributes'].delete('publisher')['attributes']
-      }.merge(item['attributes'])
+      data = { 'id' => item['id'] }
+
+      item['attributes'].each_pair do |key, value|
+        if value.respond_to?(:has_key?)
+          data[key] = item['attributes'].delete(key)['attributes']
+        else
+          data[key] = value
+        end
+      end
+
+      data
     end
   end
 end
