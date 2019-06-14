@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "id": "263294d8-9547-4134-a1a4-b5aec12ac0d8",
+      "type": "publishers",
+      "attributes": {
+        "name": "Windler LLC",
+        "description": "To the well-organized mind, death is but the next great adventure.",
+        "uuid": "263294d8-9547-4134-a1a4-b5aec12ac0d8"
+      }
+    },
+    {
+      "id": "67c5bc6b-770a-40da-8740-8279007f07fb",
+      "type": "publishers",
+      "attributes": {
+        "name": "Romaguera Inc",
+        "description": "It is our choices, Harry, that show what we truly are, far more than our abilities.",
+        "uuid": "67c5bc6b-770a-40da-8740-8279007f07fb"
+      }
+    },
+    {
+      "id": "57dcc68a-a533-4ccf-885d-652a81da02b7",
+      "type": "publishers",
+      "attributes": {
+        "name": "Watsica Group",
+        "description": "If you want to know what a man’s like, take a good look at how he treats his inferiors, not his equals.",
+        "uuid": "57dcc68a-a533-4ccf-885d-652a81da02b7"
+      }
+    }
+  ],
+  "meta": {}
+}

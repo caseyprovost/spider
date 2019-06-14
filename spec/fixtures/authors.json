@@ -1,0 +1,35 @@
+{
+  "data": [
+    {
+      "id": "d0f31f4d-c98e-4041-856c-e80c46fd0643",
+      "type": "authors",
+      "attributes": {
+        "name": "Mr. Abdul Smith",
+        "bio": "No story lives unless someone wants to listen. The stories we love best do live in us forever. So whether you come back by page or by the big screen, Hogwarts will always be there to welcome you home.",
+        "date_of_birth": "2019-02-07",
+        "hometown": "Williamsburgh"
+      }
+    },
+    {
+      "id": "8870f6c9-1f01-4f9b-baac-441678b43149",
+      "type": "authors",
+      "attributes": {
+        "name": "Mrs. Harrison Shields",
+        "bio": "It takes a great deal of bravery to stand up to our enemies, but just as much to stand up to our friends.",
+        "date_of_birth": "2020-04-12",
+        "hometown": "Jamehaven"
+      }
+    },
+    {
+      "id": "26536308-ec75-4efe-997d-7aba776f14ce",
+      "type": "authors",
+      "attributes": {
+        "name": "Mr. Norberto Beier",
+        "bio": "It is the unknown we fear when we look upon death and darkness, nothing more.",
+        "date_of_birth": "2018-10-01",
+        "hometown": "West Angeliquetown"
+      }
+    }
+  ],
+  "meta": {}
+}

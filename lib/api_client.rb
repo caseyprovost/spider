@@ -15,7 +15,7 @@ class ApiClient
   end
 
   def publishers(jwt_token)
-    response = HTTParty.get("#{PUBLISHER_SERVICE_URL}/v1/books", headers: {
+    response = HTTParty.get("#{PUBLISHER_SERVICE_URL}/v1/publishers", headers: {
       'Accept' => 'application/vnd.api+json',
       'Content-Type' => 'application/vnd.api+json',
       'Authorization' => jwt_token
@@ -26,7 +26,7 @@ class ApiClient
   end
 
   def authors(jwt_token)
-    response = HTTParty.get("#{AUTHOR_SERVICE_URL}/v1/books", headers: {
+    response = HTTParty.get("#{AUTHOR_SERVICE_URL}/v1/authors", headers: {
       'Accept' => 'application/vnd.api+json',
       'Content-Type' => 'application/vnd.api+json',
       'Authorization' => jwt_token

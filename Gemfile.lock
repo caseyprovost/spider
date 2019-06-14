@@ -68,6 +68,10 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
     diff-lcs (1.3)
+    dotenv (2.7.2)
+    dotenv-rails (2.7.2)
+      dotenv (= 2.7.2)
+      railties (>= 3.2, < 6.1)
     erubi (1.8.0)
     ffi (1.11.0)
     formatador (0.2.5)
@@ -209,6 +213,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
+  dotenv-rails
   graphql
   guard
   httparty
