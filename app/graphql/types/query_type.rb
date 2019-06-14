@@ -20,7 +20,7 @@ module Types
     end
 
     def publishers
-      ApiClient.new.publishers(context[:jwt_token]
+      ApiClient.new.publishers(context[:jwt_token])
     end
   end
 end
