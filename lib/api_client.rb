@@ -2,6 +2,7 @@ class ApiClient
   BOOK_SERVICE_URL = ENV.fetch('BOOKSHELF_API_URL')
   PUBLISHER_SERVICE_URL = ENV.fetch('PUBLISHER_API_URL')
   AUTHOR_SERVICE_URL = ENV.fetch('AUTHOR_API_URL')
+  BOOKSTORE_SERVICE_URL = ENV.fetch('BOOKSTORE_API_URL')
 
   def books(jwt_token)
     response = HTTParty.get("#{BOOK_SERVICE_URL}/v1/books", headers: {
@@ -36,6 +37,27 @@ class ApiClient
     normalize_json_api_collection(parsed_response['data'])
   end
 
+  def products(jwt_token)
+    response = HTTParty.get("#{BOOKSTORE_SERVICE_URL}/api/v1/products", headers: {
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json',
+      'Authorization' => jwt_token
+    })
+
+    parsed_response = JSON.parse(response.body)
+    normalize_json_api_collection(parsed_response['data'])
+  end
+
+  def variants(jwt_token)
+    response = HTTParty.get("#{BOOKSTORE_SERVICE_URL}/api/v1/variants", headers: {
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json',
+      'Authorization' => jwt_token
+    })
+
+    parsed_response = JSON.parse(response.body)
+    normalize_json_api_collection(parsed_response['data'])
+  end
 
   private
 

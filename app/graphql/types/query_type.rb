@@ -11,6 +11,12 @@ module Types
     field :publishers, [Types::PublisherType], null: false,
       description: "Returns a list of publishers"
 
+    field :products, [Types::ProductType], null: false,
+      description: "Returns a list of products"
+
+    field :variants, [Types::VariantType], null: false,
+      description: "Returns a list of variants"
+
     def books
       ApiClient.new.books(context[:jwt_token])
     end
@@ -21,6 +27,14 @@ module Types
 
     def publishers
       ApiClient.new.publishers(context[:jwt_token])
+    end
+
+    def products
+      ApiClient.new.products(context[:jwt_token])
+    end
+
+    def variants
+      ApiClient.new.variants(context[:jwt_token])
     end
   end
 end
