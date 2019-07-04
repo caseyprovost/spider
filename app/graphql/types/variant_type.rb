@@ -1,5 +1,5 @@
 module Types
-  class BookType < Types::BaseObject
+  class VariantType < Types::BaseObject
     field :name, String, null: false
     field :price, String, null: true
     field :sku, Integer, null: true
