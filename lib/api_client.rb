@@ -48,8 +48,14 @@ class ApiClient
     normalize_json_api_collection(parsed_response['data'])
   end
 
-  def variants(jwt_token)
-    response = HTTParty.get("#{BOOKSTORE_SERVICE_URL}/api/v1/variants", headers: {
+  def variants(jwt_token, product_id: nil)
+    base_url = "#{BOOKSTORE_SERVICE_URL}/api/v1/variants"
+
+    if product_id.present?
+      base_url += "?filter[product_id]=#{product_id}"
+    end
+
+    response = HTTParty.get(base_url, headers: {
       'Accept' => 'application/vnd.api+json',
       'Content-Type' => 'application/vnd.api+json',
       'Authorization' => jwt_token

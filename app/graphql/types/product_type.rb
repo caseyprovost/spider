@@ -3,14 +3,10 @@ module Types
     field :id, ID, null: false
     field :name, String, null: false
     field :description, String, null: true
-    field :variants, [Types::VariantType], null: true
+    field :variants, [Types::VariantType], null: false
 
-    def self.scope_items(items, context)
-      Rails.logger.info(%Q{
-        CONTEXT IS \n
-        #{context.inspect} \n
-      })
-      items.where(product_id: 1)
+    def variants
+      ApiClient.new.variants(context[:jwt_token], product_id: object['id'])
     end
   end
 end
