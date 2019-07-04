@@ -9,7 +9,7 @@ module Types
       Rails.logger.info(%Q{
         CONTEXT IS \n
         #{context.inspect} \n
-      }
+      })
       items.where(product_id: 1)
     end
   end
