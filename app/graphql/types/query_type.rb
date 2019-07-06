@@ -5,19 +5,19 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
     field :books, [Types::BookType], null: false,
-                                     description: 'Returns a list of books'
+                                     description: "Returns a list of books"
 
     field :authors, [Types::AuthorType], null: false,
-                                         description: 'Returns a list of authors'
+                                         description: "Returns a list of authors"
 
     field :publishers, [Types::PublisherType], null: false,
-                                               description: 'Returns a list of publishers'
+                                               description: "Returns a list of publishers"
 
     field :products, [Types::ProductType], null: false,
-                                           description: 'Returns a list of products'
+                                           description: "Returns a list of products"
 
     field :variants, [Types::VariantType], null: false,
-                                           description: 'Returns a list of variants'
+                                           description: "Returns a list of variants"
 
     def books
       ApiClient.new.books(context[:jwt_token])

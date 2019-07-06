@@ -6,11 +6,11 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      jwt_token: request.headers['Authorization']
+      jwt_token: request.headers["Authorization"],
     }
     result = SpiderSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue StandardError => e
+  rescue => e
     raise e unless Rails.env.development?
 
     handle_error_in_development e
@@ -40,6 +40,6 @@ class GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { error: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 500
+    render json: {error: {message: e.message, backtrace: e.backtrace}, data: {}}, status: 500
   end
 end

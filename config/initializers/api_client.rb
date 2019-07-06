@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require 'api_client'
+require "api_client"
