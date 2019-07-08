@@ -20,23 +20,29 @@ module Types
                                            description: "Returns a list of variants"
 
     def books
-      ApiClient.new.books(context[:jwt_token])
+      api_client.books(context[:jwt_token])
     end
 
     def authors
-      ApiClient.new.authors(context[:jwt_token])
+      api_client.authors(context[:jwt_token])
     end
 
     def publishers
-      ApiClient.new.publishers(context[:jwt_token])
+      api_client.publishers(context[:jwt_token])
     end
 
     def products
-      ApiClient.new.products(context[:jwt_token])
+      api_client.products(context[:jwt_token])
     end
 
     def variants
-      ApiClient.new.variants(context[:jwt_token])
+      api_client.variants(context[:jwt_token])
+    end
+
+    private
+
+    def api_client
+      @api_client ||= ApiClient.new
     end
   end
 end
