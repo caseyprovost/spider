@@ -6,7 +6,13 @@ class ApiClient
   AUTHOR_SERVICE_URL = ENV.fetch("AUTHOR_API_URL")
   BOOKSTORE_SERVICE_URL = ENV.fetch("BOOKSTORE_API_URL")
 
-  def books(jwt_token)
+  attr_reader :jwt_token
+
+  def initialize(jwt_token)
+    @jwt_token = jwt_token
+  end
+
+  def books
     response = HTTParty.get("#{BOOK_SERVICE_URL}/v1/books", headers: {
       "Accept" => "application/vnd.api+json",
       "Content-Type" => "application/vnd.api+json",
@@ -17,7 +23,7 @@ class ApiClient
     normalize_json_api_collection(parsed_response["data"])
   end
 
-  def publishers(jwt_token)
+  def publishers
     response = HTTParty.get("#{PUBLISHER_SERVICE_URL}/v1/publishers", headers: {
       "Accept" => "application/vnd.api+json",
       "Content-Type" => "application/vnd.api+json",
@@ -28,7 +34,7 @@ class ApiClient
     normalize_json_api_collection(parsed_response["data"])
   end
 
-  def authors(jwt_token)
+  def authors
     response = HTTParty.get("#{AUTHOR_SERVICE_URL}/v1/authors", headers: {
       "Accept" => "application/vnd.api+json",
       "Content-Type" => "application/vnd.api+json",
@@ -39,7 +45,18 @@ class ApiClient
     normalize_json_api_collection(parsed_response["data"])
   end
 
-  def products(jwt_token)
+  def author(uuid)
+    response = HTTParty.get("#{AUTHOR_SERVICE_URL}/v1/authors/#{uuid}", headers: {
+      "Accept" => "application/vnd.api+json",
+      "Content-Type" => "application/vnd.api+json",
+      "Authorization" => jwt_token,
+    })
+
+    parsed_response = JSON.parse(response.body)
+    normalize_json_api_object(parsed_response["data"])
+  end
+
+  def products
     response = HTTParty.get("#{BOOKSTORE_SERVICE_URL}/api/v1/products", headers: {
       "Accept" => "application/vnd.api+json",
       "Content-Type" => "application/vnd.api+json",
@@ -50,10 +67,15 @@ class ApiClient
     normalize_json_api_collection(parsed_response["data"])
   end
 
-  def variants(jwt_token, product_id: nil)
+  def variants(filters: {})
     base_url = "#{BOOKSTORE_SERVICE_URL}/api/v1/variants"
+    filter_parts = []
 
-    base_url += "?filter[product_id]=#{product_id}" if product_id.present?
+    filters.each_pair do |filter, criteria|
+      filter_parts << "filter[#{filter}]=#{criteria}"
+    end
+
+    base_url += "?#{filter_parts.join("&")}"
 
     response = HTTParty.get(base_url, headers: {
       "Accept" => "application/vnd.api+json",
@@ -67,19 +89,21 @@ class ApiClient
 
   private
 
-  def normalize_json_api_collection(collection)
-    collection.map do |item|
-      data = {"id" => item["id"]}
+  def normalize_json_api_object(object)
+    data = {"id" => object["id"]}
 
-      item["attributes"].each_pair do |key, value|
-        data[key] = if value.respond_to?(:has_key?)
-          item["attributes"].delete(key)["attributes"]
-        else
-          value
-        end
+    object["attributes"].each_pair do |key, value|
+      data[key] = if value.respond_to?(:has_key?)
+        object["attributes"].delete(key)["attributes"]
+      else
+        value
       end
-
-      data
     end
+
+    data
+  end
+
+  def normalize_json_api_collection(collection)
+    collection.map { |item| normalize_json_api_object(item) }
   end
 end

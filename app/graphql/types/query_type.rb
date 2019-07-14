@@ -19,30 +19,38 @@ module Types
     field :variants, [Types::VariantType], null: false,
                                            description: "Returns a list of variants"
 
+    field :author, Types::AuthorType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def author(id:)
+      api_client.author(id)
+    end
+
     def books
-      api_client.books(context[:jwt_token])
+      api_client.books
     end
 
     def authors
-      api_client.authors(context[:jwt_token])
+      api_client.authors
     end
 
     def publishers
-      api_client.publishers(context[:jwt_token])
+      api_client.publishers
     end
 
     def products
-      api_client.products(context[:jwt_token])
+      api_client.products
     end
 
     def variants
-      api_client.variants(context[:jwt_token])
+      api_client.variants
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new
+      @api_client ||= ApiClient.new(context[:jwt_token])
     end
   end
 end

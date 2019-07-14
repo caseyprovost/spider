@@ -7,11 +7,11 @@ RSpec.describe ApiClient do
   include ApiMocking
 
   let(:auth_token) { "Bearer SomeToken" }
-  let(:client) { described_class.new }
+  let(:client) { described_class.new(auth_token) }
   let(:json_response) { JSON.parse(response.parsed_response) }
 
   describe "#books" do
-    let(:response) { client.books(auth_token) }
+    let(:response) { client.books }
 
     context "when the client is already authorized" do
       before { mock_books(auth_token) }
@@ -31,7 +31,7 @@ RSpec.describe ApiClient do
   end
 
   describe "#authors" do
-    let(:response) { client.authors(auth_token) }
+    let(:response) { client.authors }
 
     context "when the client is already authorized" do
       before { mock_authors(auth_token) }
@@ -50,7 +50,7 @@ RSpec.describe ApiClient do
   end
 
   describe "#publishers" do
-    let(:response) { client.publishers(auth_token) }
+    let(:response) { client.publishers }
 
     context "when the client is already authorized" do
       before { mock_publishers(auth_token) }

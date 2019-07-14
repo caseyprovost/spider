@@ -7,6 +7,8 @@
         "publication_date": "2019-05-13",
         "summary": "It does not do to dwell on dreams and forget to live.",
         "title": "Crucio-1",
+        "publisher_uuid": "036ba60f-e9a9-4649-b5d9-95537664dda4",
+        "author_uuid": "1111-2222-3333",
         "updated_at": "2019-06-09T00:30:21+00:00"
       },
       "id": "1",
@@ -19,6 +21,8 @@
         "publication_date": "2019-05-13",
         "summary": "We could all have been killed - or worse, expelled.",
         "title": "Expelliarmus-2",
+        "publisher_uuid": "1234-1234-1234",
+        "author_uuid": "1111-2222-3333",
         "updated_at": "2019-06-09T00:30:21+00:00"
       },
       "id": "2",
@@ -31,6 +35,8 @@
         "publication_date": "2019-05-13",
         "summary": "Of course it is happening inside your head, Harry, but why on earth should that mean that it is not real?",
         "title": "Lumos-3",
+        "publisher_uuid": "036ba60f-e9a9-4649-b5d9-95537664dda4",
+        "author_uuid": "1111-2222-3333",
         "updated_at": "2019-06-09T00:30:21+00:00"
       },
       "id": "3",

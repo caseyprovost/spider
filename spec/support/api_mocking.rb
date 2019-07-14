@@ -12,6 +12,17 @@ module ApiMocking
       ).to_return(status: 201, body: json_fixture("books"), headers: {Authorization: "Bearer 234234klsd"})
   end
 
+  def mock_books_with_authors(auth_token)
+    stub_request(:get, "http://bookshelf.book-ecosystem.dev/v1/books")
+      .with(
+        headers: {
+          "Accept" => "application/vnd.api+json",
+          "Content-Type" => "application/vnd.api+json",
+          "Authorization" => auth_token,
+        }
+      ).to_return(status: 201, body: json_fixture("books"), headers: {Authorization: "Bearer 234234klsd"})
+  end
+
   def mock_publishers(auth_token)
     stub_request(:get, "http://publisher-registry.book-ecosystem.dev/v1/publishers")
       .with(
@@ -32,6 +43,17 @@ module ApiMocking
           "Authorization" => auth_token,
         }
       ).to_return(status: 201, body: json_fixture("authors"), headers: {Authorization: "Bearer 234234klsd"})
+  end
+
+  def mock_author(auth_token, uuid)
+    stub_request(:get, "http://author-registry.book-ecosystem.dev/v1/authors/#{uuid}")
+      .with(
+        headers: {
+          "Accept" => "application/vnd.api+json",
+          "Content-Type" => "application/vnd.api+json",
+          "Authorization" => auth_token,
+        }
+      ).to_return(status: 201, body: json_fixture("stephen_king"), headers: {Authorization: "Bearer 234234klsd"})
   end
 
   def json_fixture(file_name)

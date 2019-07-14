@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": "1111-2222-3333",
+    "type": "authors",
+    "attributes": {
+      "name": "Stephan King",
+      "bio": "No story lives unless someone wants to listen. The stories we love best do live in us forever. So whether you come back by page or by the big screen, Hogwarts will always be there to welcome you home.",
+      "date_of_birth": "2019-02-07",
+      "hometown": "Williamsburgh",
+      "uuid": "d0f31f4d-c98e-4041-856c-e80c46fd0643"
+    }
+  },
+  "meta": {}
+}
