@@ -94,4 +94,35 @@ RSpec.describe Types::QueryType do
       end
     end
   end
+
+  describe "products" do
+    context "standard case" do
+      before { mock_products(auth_token) }
+
+      let(:expected_products) { JSON.parse(json_fixture("products"))["data"] }
+
+      let(:query) do
+        %(query {
+          products {
+            name
+            description
+          }
+        })
+      end
+
+      subject(:result) do
+        SpiderSchema.execute(query, context: {jwt_token: auth_token}).as_json
+      end
+
+      it "returns all the products" do
+        products = result.dig("data", "products")
+        expect(products.count).to eq(expected_products.count)
+
+        products.each do |product|
+          product_match = expected_products.detect { |item| item["attributes"]["name"] == product["name"] }
+          expect(product_match).to be_present
+        end
+      end
+    end
+  end
 end

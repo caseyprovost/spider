@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "products",
+      "attributes": {
+        "name": "The Ghost King",
+        "description": "Distinctio consequuntur quia. Exercitationem et non."
+      },
+      "relationships": {
+        "categories": {
+          "links": {
+            "related": "/api/v1/categories?filter[product_id]=1"
+          }
+        },
+        "variants": {
+          "links": {
+            "related": "/api/v1/variants?filter[product_id]=1"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {}
+}

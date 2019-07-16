@@ -23,6 +23,17 @@ module ApiMocking
       ).to_return(status: 201, body: json_fixture("books"), headers: {Authorization: "Bearer 234234klsd"})
   end
 
+  def mock_products(auth_token)
+    stub_request(:get, "https://ruby-bookstore.herokuapp.com/api/v1/products")
+      .with(
+        headers: {
+          "Accept" => "application/vnd.api+json",
+          "Content-Type" => "application/vnd.api+json",
+          "Authorization" => auth_token,
+        }
+      ).to_return(status: 201, body: json_fixture("products"), headers: {Authorization: "Bearer 234234klsd"})
+  end
+
   def mock_publishers(auth_token)
     stub_request(:get, "http://publisher-registry.book-ecosystem.dev/v1/publishers")
       .with(
