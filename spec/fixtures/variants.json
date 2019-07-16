@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "variants",
+      "attributes": {
+        "name": "The Ghost King - Hard Cover",
+        "price": 40.0,
+        "sku": "SKU-1",
+        "position": 1
+      },
+      "relationships": {
+        "product": {
+          "links": {
+            "related": "/api/v1/products/1"
+          }
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "variants",
+      "attributes": {
+        "name": "The Ghost King - Paperback",
+        "price": 20.0,
+        "sku": "SKU-2",
+        "position": 2
+      },
+      "relationships": {
+        "product": {
+          "links": {
+            "related": "/api/v1/products/1"
+          }
+        }
+      }
+    },
+    {
+      "id": "3",
+      "type": "variants",
+      "attributes": {
+        "name": "The Ghost King - ebook",
+        "price": 10.0,
+        "sku": "SKU-3",
+        "position": 3
+      },
+      "relationships": {
+        "product": {
+          "links": {
+            "related": "/api/v1/products/1"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {}
+}

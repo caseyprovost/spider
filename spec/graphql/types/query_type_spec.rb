@@ -73,11 +73,13 @@ RSpec.describe Types::QueryType do
     let(:expected_authors) { JSON.parse(json_fixture("authors"))["data"] }
 
     let(:query) do
-      %(query {
-        authors {
-          name
+      <<~GQL
+        query {
+          authors {
+            name
+          }
         }
-      })
+      GQL
     end
 
     subject(:result) do
@@ -102,12 +104,14 @@ RSpec.describe Types::QueryType do
       let(:expected_products) { JSON.parse(json_fixture("products"))["data"] }
 
       let(:query) do
-        %(query {
-          products {
-            name
-            description
+        <<~GQL
+          query {
+            products {
+              name
+              description
+            }
           }
-        })
+        GQL
       end
 
       subject(:result) do
@@ -115,6 +119,46 @@ RSpec.describe Types::QueryType do
       end
 
       it "returns all the products" do
+        products = result.dig("data", "products")
+        expect(products.count).to eq(expected_products.count)
+
+        products.each do |product|
+          product_match = expected_products.detect { |item| item["attributes"]["name"] == product["name"] }
+          expect(product_match).to be_present
+        end
+      end
+    end
+
+    context "with variants" do
+      before do
+        mock_products(auth_token)
+        mock_variants(auth_token, 1)
+      end
+
+      let(:expected_products) { JSON.parse(json_fixture("products"))["data"] }
+      let(:expected_variants) { JSON.parse(json_fixture("variants"))["data"] }
+
+      let(:query) do
+        <<~GQL
+          query {
+            products {
+              name
+              description
+              variants {
+                name
+                position
+                price
+              }
+            }
+          }
+        GQL
+      end
+
+      subject(:result) do
+        SpiderSchema.execute(query, context: {jwt_token: auth_token}).as_json
+      end
+
+      it "returns all the products with their variants" do
         products = result.dig("data", "products")
         expect(products.count).to eq(expected_products.count)
 

@@ -8,7 +8,8 @@ module Types
     field :variants, [Types::VariantType], null: false
 
     def variants
-      ApiClient.new.variants(context[:jwt_token], product_id: object["id"])
+      filters = { product_id: object["id"] }
+      ApiClient.new(context[:jwt_token]).variants(filters: filters)
     end
   end
 end
