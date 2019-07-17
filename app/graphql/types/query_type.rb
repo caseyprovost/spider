@@ -13,11 +13,16 @@ module Types
     field :publishers, [Types::PublisherType], null: false,
                                                description: "Returns a list of publishers"
 
-    field :products, [Types::ProductType], null: false,
-                                           description: "Returns a list of products"
+    field :products, [Types::ProductType], null: false do
+      argument :category_id, ID, required: false
+      description "Returns a list of products"
+    end
 
     field :variants, [Types::VariantType], null: false,
                                            description: "Returns a list of variants"
+
+    field :categories, [Types::CategoryType], null: false,
+                                              description: "Returns a list of categories"
 
     field :author, Types::AuthorType, null: true do
       argument :id, ID, required: true
@@ -39,12 +44,18 @@ module Types
       api_client.publishers
     end
 
-    def products
-      api_client.products
+    def products(category_id: nil)
+      api_client.products(filters: {
+        category_id: category_id
+      })
     end
 
     def variants
       api_client.variants
+    end
+
+    def categories
+      api_client.categories
     end
 
     private

@@ -1,0 +1,21 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "categories",
+      "attributes": {
+        "name": "Book",
+        "slug": "book"
+      }
+    },
+    {
+      "id": "2",
+      "type": "categories",
+      "attributes": {
+        "name": "Sci-Fi/Fantasy",
+        "slug": "sci-fi-fantasy"
+      }
+    }
+  ],
+  "meta": {}
+}

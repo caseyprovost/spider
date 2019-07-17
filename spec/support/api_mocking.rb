@@ -23,6 +23,25 @@ module ApiMocking
       ).to_return(status: 201, body: json_fixture("books"), headers: {Authorization: "Bearer 234234klsd"})
   end
 
+  def mock_product_search(auth_token, filters: {})
+    query =  {
+      filters: filters.keep_if { |_, value| value.present? }
+    }
+
+    query.delete(:filters) if query[:filters].empty?
+
+    stub_request(:get, "#{ENV['BOOKSTORE_API_URL']}/api/v1/products")
+      .with(
+        query: query,
+        headers: {
+          "Accept" => "application/vnd.api+json",
+          "Content-Type" => "application/vnd.api+json",
+          "Authorization" => auth_token,
+        }
+      ).to_return(status: 201, body: json_fixture("products"), headers: {Authorization: "Bearer 234234klsd"})
+  end
+
+
   def mock_products(auth_token)
     stub_request(:get, "https://ruby-bookstore.herokuapp.com/api/v1/products")
       .with(
@@ -43,6 +62,17 @@ module ApiMocking
           "Authorization" => auth_token,
         }
       ).to_return(status: 201, body: json_fixture("variants"), headers: {Authorization: "Bearer 234234klsd"})
+  end
+
+  def mock_categories(auth_token)
+    stub_request(:get, "https://ruby-bookstore.herokuapp.com/api/v1/categories")
+      .with(
+        headers: {
+          "Accept" => "application/vnd.api+json",
+          "Content-Type" => "application/vnd.api+json",
+          "Authorization" => auth_token,
+        }
+      ).to_return(status: 201, body: json_fixture("categories"), headers: {Authorization: "Bearer 234234klsd"})
   end
 
   def mock_publishers(auth_token)

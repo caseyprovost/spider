@@ -8,6 +8,33 @@ RSpec.describe Types::QueryType do
 
   let(:auth_token) { "Bearer SomeToken" }
 
+  describe "categories" do
+    before { mock_categories(auth_token) }
+
+    let(:query) do
+      <<~GQL
+        query {
+          categories {
+            name
+          }
+        }
+      GQL
+    end
+
+    subject(:result) do
+      SpiderSchema.execute(query, context: {jwt_token: auth_token}).as_json
+    end
+
+    it "returns all categories" do
+      items = result.dig("data", "categories")
+      expect(items.count).to be > 1
+
+      items.each do |item|
+        expect(item["name"]).to be_present
+      end
+    end
+  end
+
   describe "books" do
     context "standard case" do
       before { mock_books(auth_token) }
@@ -126,6 +153,29 @@ RSpec.describe Types::QueryType do
           product_match = expected_products.detect { |item| item["attributes"]["name"] == product["name"] }
           expect(product_match).to be_present
         end
+      end
+    end
+
+    context "filtering by category id" do
+      before { mock_product_search(auth_token, filters: { category_id: 1 }) }
+
+      let(:query) do
+        <<~GQL
+          query {
+            products(categoryId: 1) {
+              name
+            }
+          }
+        GQL
+      end
+
+      subject(:result) do
+        SpiderSchema.execute(query, context: {jwt_token: auth_token}).as_json
+      end
+
+      it "returns products" do
+        items = result.dig("data", "products")
+        expect(items.count).to be > 0
       end
     end
 
