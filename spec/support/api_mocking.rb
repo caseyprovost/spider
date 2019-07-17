@@ -25,10 +25,10 @@ module ApiMocking
 
   def mock_product_search(auth_token, filters: {})
     query = {
-      filters: filters.keep_if { |_, value| value.present? },
+      filter: filters.keep_if { |_, value| value.present? },
     }
 
-    query.delete(:filters) if query[:filters].empty?
+    query.delete(:filter) if query[:filter].empty?
 
     stub_request(:get, "#{ENV["BOOKSTORE_API_URL"]}/api/v1/products")
       .with(

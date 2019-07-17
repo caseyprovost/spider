@@ -12,106 +12,89 @@ class ApiClient
     @jwt_token = jwt_token
   end
 
-  def books
-    response = HTTParty.get("#{BOOK_SERVICE_URL}/v1/books", headers: {
-      "Accept" => "application/vnd.api+json",
-      "Content-Type" => "application/vnd.api+json",
-      "Authorization" => jwt_token,
-    })
-
-    parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response["data"])
+  def books(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOK_SERVICE_URL}/v1/books",
+      filters: filters
+    )
   end
 
-  def publishers
-    response = HTTParty.get("#{PUBLISHER_SERVICE_URL}/v1/publishers", headers: {
-      "Accept" => "application/vnd.api+json",
-      "Content-Type" => "application/vnd.api+json",
-      "Authorization" => jwt_token,
-    })
-
-    parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response["data"])
+  def publishers(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{PUBLISHER_SERVICE_URL}/v1/publishers",
+      filters: filters
+    )
   end
 
-  def authors
-    response = HTTParty.get("#{AUTHOR_SERVICE_URL}/v1/authors", headers: {
-      "Accept" => "application/vnd.api+json",
-      "Content-Type" => "application/vnd.api+json",
-      "Authorization" => jwt_token,
-    })
-
-    parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response["data"])
+  def authors(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{AUTHOR_SERVICE_URL}/v1/authors",
+      filters: filters
+    )
   end
 
   def author(uuid)
-    response = HTTParty.get("#{AUTHOR_SERVICE_URL}/v1/authors/#{uuid}", headers: {
-      "Accept" => "application/vnd.api+json",
-      "Content-Type" => "application/vnd.api+json",
-      "Authorization" => jwt_token,
-    })
+    fetch("#{AUTHOR_SERVICE_URL}/v1/authors/#{uuid}")
+  end
+
+  def products(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/products",
+      filters: filters
+    )
+  end
+
+  def categories(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/categories",
+      filters: filters
+    )
+  end
+
+  def variants(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/variants",
+      filters: filters
+    )
+  end
+
+  private
+
+  def fetch(url)
+    response = HTTParty.get(url, headers: headers)
 
     parsed_response = JSON.parse(response.body)
     normalize_json_api_object(parsed_response["data"])
   end
 
-  def products(filters: {})
-    base_url = "#{BOOKSTORE_SERVICE_URL}/api/v1/products"
-    query = {filters: filters.keep_if { |_, value| value.present? }}
-    query.delete(:filters) if query[:filters].empty?
+  def fetch_collection(method:, url:, filters: {})
+    query = {filter: filters.keep_if { |_, value| value.present? }}
+    query.delete(:filter) if query[:filter].empty?
 
-    response = HTTParty.get(base_url,
+    response = HTTParty.public_send(
+      method,
+      url,
       query: query,
-      headers: {
-        "Accept" => "application/vnd.api+json",
-        "Content-Type" => "application/vnd.api+json",
-        "Authorization" => jwt_token,
-      })
-
-    parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response["data"])
-  end
-
-  def categories(filters: {})
-    base_url = "#{BOOKSTORE_SERVICE_URL}/api/v1/categories"
-    query = {filters: filters.keep_if { |_, value| value.present? }}
-    query.delete(:filters) if query[:filters].empty?
-
-    response = HTTParty.get(base_url,
-      query: query,
-      headers: {
-        "Accept" => "application/vnd.api+json",
-        "Content-Type" => "application/vnd.api+json",
-        "Authorization" => jwt_token
-      }
+      headers: headers
     )
 
     parsed_response = JSON.parse(response.body)
     normalize_json_api_collection(parsed_response["data"])
   end
 
-  def variants(filters: {})
-    base_url = "#{BOOKSTORE_SERVICE_URL}/api/v1/variants"
-    filter_parts = []
-
-    filters.each_pair do |filter, criteria|
-      filter_parts << "filter[#{filter}]=#{criteria}"
-    end
-
-    base_url += "?#{filter_parts.join("&")}"
-
-    response = HTTParty.get(base_url, headers: {
+  def headers
+    @headers ||= {
       "Accept" => "application/vnd.api+json",
       "Content-Type" => "application/vnd.api+json",
       "Authorization" => jwt_token,
-    })
-
-    parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response["data"])
+    }
   end
-
-  private
 
   def normalize_json_api_object(object)
     data = {"id" => object["id"]}
