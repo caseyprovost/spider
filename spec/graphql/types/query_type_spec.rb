@@ -157,7 +157,7 @@ RSpec.describe Types::QueryType do
     end
 
     context "filtering by category id" do
-      before { mock_product_search(auth_token, filters: { category_id: 1 }) }
+      before { mock_product_search(auth_token, filters: {category_id: 1}) }
 
       let(:query) do
         <<~GQL

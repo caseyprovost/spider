@@ -58,7 +58,7 @@ class ApiClient
 
   def products(filters: {})
     base_url = "#{BOOKSTORE_SERVICE_URL}/api/v1/products"
-    query = { filters: filters.keep_if { |_, value| value.present? } }
+    query = {filters: filters.keep_if { |_, value| value.present? }}
     query.delete(:filters) if query[:filters].empty?
 
     response = HTTParty.get(base_url,
@@ -67,8 +67,7 @@ class ApiClient
         "Accept" => "application/vnd.api+json",
         "Content-Type" => "application/vnd.api+json",
         "Authorization" => jwt_token,
-      }
-    )
+      })
 
     parsed_response = JSON.parse(response.body)
     normalize_json_api_collection(parsed_response["data"])

@@ -46,7 +46,7 @@ module Types
 
     def products(category_id: nil)
       api_client.products(filters: {
-        category_id: category_id
+        category_id: category_id,
       })
     end
 
