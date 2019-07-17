@@ -14,7 +14,8 @@ module Types
     end
 
     def categories
-      api_client(context[:jwt_token]).categories
+      filters = {product_id: object["id"]}
+      api_client(context[:jwt_token]).categories(filters)
     end
 
     private
