@@ -28,8 +28,17 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :product, Types::ProductType, null: true do
+      argument :id, ID, required: true
+    end
+
+
     def author(id:)
       api_client.author(id)
+    end
+
+    def product(id:)
+      api_client.product(id)
     end
 
     def books

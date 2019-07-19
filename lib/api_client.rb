@@ -48,6 +48,10 @@ class ApiClient
     )
   end
 
+  def product(uuid)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/product/#{uuid}")
+  end
+
   def categories(filters: {})
     fetch_collection(
       method: :get,
