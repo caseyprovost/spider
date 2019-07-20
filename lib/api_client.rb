@@ -20,7 +20,7 @@ class ApiClient
     fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/products/#{id}")
   end
 
-  def property(uuid)
+  def property(id)
     fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/properties/#{id}")
   end
 
