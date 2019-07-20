@@ -12,6 +12,22 @@ class ApiClient
     @jwt_token = jwt_token
   end
 
+  def properties(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOK_SERVICE_URL}/v1/properties",
+      filters: filters
+    )
+  end
+
+  def option_types(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOK_SERVICE_URL}/v1/option_types",
+      filters: filters
+    )
+  end
+
   def books(filters: {})
     fetch_collection(
       method: :get,
