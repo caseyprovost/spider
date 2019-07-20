@@ -8,6 +8,7 @@ module Types
     field :variants, [Types::VariantType], null: false
     field :categories, [Types::CategoryType], null: false
     field :properties, [Types::PropertyType], null: false
+    field :product_properties, [Types::ProductPropertyType], null: false
     field :option_types, [Types::OptionType], null: false
 
     def variants
@@ -23,6 +24,11 @@ module Types
     def properties
       filters = {product_id: object["id"]}
       api_client(context[:jwt_token]).properties(filters: filters)
+    end
+
+    def product_properties
+      filters = {product_id: object["id"]}
+      api_client(context[:jwt_token]).product_properties(filters: filters)
     end
 
     def option_types

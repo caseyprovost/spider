@@ -12,10 +12,26 @@ class ApiClient
     @jwt_token = jwt_token
   end
 
+  def product(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/products/#{id}")
+  end
+
+  def property(uuid)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/properties/#{id}")
+  end
+
   def properties(filters: {})
     fetch_collection(
       method: :get,
       url: "#{BOOK_SERVICE_URL}/v1/properties",
+      filters: filters
+    )
+  end
+
+  def product_properties(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOK_SERVICE_URL}/v1/product_properties",
       filters: filters
     )
   end
