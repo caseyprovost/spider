@@ -117,7 +117,7 @@ class ApiClient
     query = {filter: filters.keep_if { |_, value| value.present? }}
     query.delete(:filter) if query[:filter].empty?
     options = { query: query, headers: headers }
-    response = HTTParty.send(:perform_request, method, url, options)
+    response = self.class.get(url, options)
 
     parsed_response = JSON.parse(response.body)
     normalize_json_api_collection(parsed_response["data"])
