@@ -24,6 +24,18 @@ module Types
     field :categories, [Types::CategoryType], null: false,
                                               description: "Returns a list of categories"
 
+    field :option_types, [Types::OptionType], null: false,
+                                              description: "Returns a list of option types"
+
+    field :product_option_types, [Types::ProductOptionType], null: false,
+                                              description: "Returns a list of product option types"
+
+    field :properties, [Types::PropertyType], null: false,
+                                              description: "Returns a list of properties"
+
+    field :product_properties, [Types::ProductPropertyType], null: false,
+                                              description: "Returns a list of product properties"
+
     field :author, Types::AuthorType, null: true do
       argument :id, ID, required: true
     end
@@ -66,6 +78,23 @@ module Types
     def categories
       api_client.categories
     end
+
+    def properties
+      api_client.properties
+    end
+
+    def product_properties
+      api_client.product_properties
+    end
+
+    def option_types
+      api_client.option_types
+    end
+
+    def product_option_types
+      api_client.product_option_types
+    end
+
 
     private
 
