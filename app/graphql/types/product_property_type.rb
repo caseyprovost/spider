@@ -2,7 +2,7 @@ module Types
   class ProductPropertyType < Types::BaseObject
     field :id, ID, null: false
     field :value, String, null: false
-    field :property_id, String, null: false,
+    field :property_id, String, null: false
     field :product_id, String, null: false
     field :property, Types::PropertyType, null: false
     field :product, Types::ProductType, null: false
