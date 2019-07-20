@@ -1,8 +1,6 @@
 module Types
   class ProductOptionType < Types::BaseObject
     field :id, ID, null: false
-    field :product_id, String, null: false
-    field :option_type_id, String, null: false
     field :option_type, Types::OptionType, null: false
     field :product, Types::ProductType, null: false
 
