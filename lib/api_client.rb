@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 class ApiClient
+  include HTTParty
+
   BOOK_SERVICE_URL = ENV.fetch("BOOKSHELF_API_URL")
   PUBLISHER_SERVICE_URL = ENV.fetch("PUBLISHER_API_URL")
   AUTHOR_SERVICE_URL = ENV.fetch("AUTHOR_API_URL")
   BOOKSTORE_SERVICE_URL = ENV.fetch("BOOKSTORE_API_URL")
 
   attr_reader :jwt_token
+
+  debug_output
 
   def initialize(jwt_token)
     @jwt_token = jwt_token
@@ -103,7 +107,7 @@ class ApiClient
   private
 
   def fetch(url)
-    response = HTTParty.get(url, headers: headers)
+    response = self.class.get(url, headers: headers)
 
     parsed_response = JSON.parse(response.body)
     normalize_json_api_object(parsed_response["data"])
@@ -112,13 +116,8 @@ class ApiClient
   def fetch_collection(method:, url:, filters: {})
     query = {filter: filters.keep_if { |_, value| value.present? }}
     query.delete(:filter) if query[:filter].empty?
-
-    response = HTTParty.public_send(
-      method,
-      url,
-      query: query,
-      headers: headers
-    )
+    options = { query: query, headers: headers }
+    response = self.perform_request(method, url, options)
 
     parsed_response = JSON.parse(response.body)
     normalize_json_api_collection(parsed_response["data"])
