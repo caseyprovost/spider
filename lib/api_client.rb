@@ -27,7 +27,7 @@ class ApiClient
   def properties(filters: {})
     fetch_collection(
       method: :get,
-      url: "#{BOOK_SERVICE_URL}/v1/properties",
+      url: "#{BOOKSTORE_SERVICE_URL}/v1/properties",
       filters: filters
     )
   end
@@ -35,7 +35,7 @@ class ApiClient
   def product_properties(filters: {})
     fetch_collection(
       method: :get,
-      url: "#{BOOK_SERVICE_URL}/api/v1/product_properties",
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/product_properties",
       filters: filters
     )
   end
@@ -43,7 +43,7 @@ class ApiClient
   def option_types(filters: {})
     fetch_collection(
       method: :get,
-      url: "#{BOOK_SERVICE_URL}/api/v1/option_types",
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/option_types",
       filters: filters
     )
   end
