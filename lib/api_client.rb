@@ -84,8 +84,8 @@ class ApiClient
     )
   end
 
-  def product(uuid)
-    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/products/#{uuid}")
+  def product(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/products/#{id}")
   end
 
   def categories(filters: {})

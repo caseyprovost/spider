@@ -8,5 +8,15 @@ module Types
     field :sku, Integer, null: true
     field :position, String, null: true
     field :product, Types::ProductType, null: true
+
+    def product
+      api_client.product(object["product_id"])
+    end
+
+    private
+
+    def api_client
+      @api_client ||= ApiClient.new(context[:jwt_token])
+    end
   end
 end
