@@ -113,8 +113,14 @@ class ApiClient
   def fetch(url)
     response = self.class.get(url, headers: headers)
     parsed_response = JSON.parse(response.body)
-    results = parsed_response.is_a?(Array) ? parsed_response.first : parsed_response
-    normalize_json_api_object(results["data"])
+
+    result = if parsed_response['data'].is_a?(Array)
+      parsed_response['data'].first
+    else
+      parsed_response['data']
+    end
+
+    normalize_json_api_object(result)
   end
 
   def fetch_collection(method:, url:, filters: {})
