@@ -123,7 +123,7 @@ class ApiClient
     response = self.class.get(url, options)
 
     parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response["data"])
+    normalize_json_api_collection(parsed_response.first["data"])
   end
 
   def headers
@@ -135,10 +135,6 @@ class ApiClient
   end
 
   def normalize_json_api_object(object)
-    puts "\n\n\n"
-    puts "object: #{object.inspect}"
-    puts "\n\n\n"
-
     data = {"id" => object["id"]}
 
     object["attributes"].each_pair do |key, value|
