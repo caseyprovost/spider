@@ -135,6 +135,10 @@ class ApiClient
   end
 
   def normalize_json_api_object(object)
+    puts "\n\n\n"
+    puts "object: #{object.inspect}"
+    puts "\n\n\n"
+
     data = {"id" => object["id"]}
 
     object["attributes"].each_pair do |key, value|
