@@ -104,11 +104,22 @@ class ApiClient
     )
   end
 
+  def option_types(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/option_types",
+      filters: filters
+    )
+  end
+
+  def option_type(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/option_types/#{id}")
+  end
+
   private
 
   def fetch(url)
     response = self.class.get(url, headers: headers)
-
     parsed_response = JSON.parse(response.body)
     normalize_json_api_object(parsed_response["data"])
   end
