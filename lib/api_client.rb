@@ -123,7 +123,8 @@ class ApiClient
     response = self.class.get(url, options)
 
     parsed_response = JSON.parse(response.body)
-    normalize_json_api_collection(parsed_response.first["data"])
+    results = parsed_response.is_a?(Array) ? parsed_response.first : parsed_response
+    normalize_json_api_collection(results["data"])
   end
 
   def headers
