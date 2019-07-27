@@ -7,6 +7,7 @@ module Types
     field :price, String, null: true
     field :sku, Integer, null: true
     field :position, String, null: true
+    field :description, String, null: true
     field :created_at, String, null: true
     field :updated_at, String, null: true
 
