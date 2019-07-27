@@ -27,16 +27,33 @@ module Types
     field :option_types, [Types::OptionType], null: false,
                                               description: "Returns a list of option types"
 
-    field :product_option_types, [Types::ProductOptionType], null: false,
-                                              description: "Returns a list of product option types"
+    field :product_option_types, [Types::ProductOptionType], null: false do
+      description "Returns a list of product option types"
+    end
+
+    field :option_values, [Types::OptionValueType], null: false do
+      description "Returns a list of option values"
+    end
+
+    field :option_value_variants, [Types::OptionValueVariantType], null: false do
+      description "Returns a list of option value variants"
+    end
 
     field :properties, [Types::PropertyType], null: false,
                                               description: "Returns a list of properties"
 
     field :product_properties, [Types::ProductPropertyType], null: false,
-                                              description: "Returns a list of product properties"
+                                                             description: "Returns a list of product properties"
 
     field :author, Types::AuthorType, null: true do
+      argument :id, ID, required: true
+    end
+
+    field :publisher, Types::PublisherType, null: true do
+      argument :id, ID, required: true
+    end
+
+    field :book, Types::PublisherType, null: true do
       argument :id, ID, required: true
     end
 
@@ -44,6 +61,21 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :option_type, Types::OptionType, null: true do
+      argument :id, ID, required: true
+    end
+
+    field :option_value, Types::OptionType, null: true do
+      argument :id, ID, required: true
+    end
+
+    field :option_value_variant, Types::OptionValueVariantType, null: true do
+      argument :id, ID, required: true
+    end
+
+    field :variant, Types::VariantType, null: true do
+      argument :id, ID, required: true
+    end
 
     def author(id:)
       api_client.author(id)
@@ -71,12 +103,24 @@ module Types
       })
     end
 
+    def variant(id:)
+      api_client.variant(id)
+    end
+
     def variants
       api_client.variants
     end
 
+    def category(id:)
+      api_client.category(id)
+    end
+
     def categories
       api_client.categories
+    end
+
+    def property(id:)
+      api_client.property(id)
     end
 
     def properties
@@ -94,7 +138,6 @@ module Types
     def product_option_types
       api_client.product_option_types
     end
-
 
     private
 

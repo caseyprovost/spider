@@ -16,10 +16,6 @@ class ApiClient
     @jwt_token = jwt_token
   end
 
-  def product(id)
-    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/products/#{id}")
-  end
-
   def property(id)
     fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/properties/#{id}")
   end
@@ -48,8 +44,32 @@ class ApiClient
     )
   end
 
-   def option_type(id)
+  def option_type(id)
     fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/option_types/#{id}")
+  end
+
+  def option_values(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/option_values",
+      filters: filters
+    )
+  end
+
+  def option_value(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/option_values/#{id}")
+  end
+
+  def option_value_variants(filters: {})
+    fetch_collection(
+      method: :get,
+      url: "#{BOOKSTORE_SERVICE_URL}/api/v1/option_value_variants",
+      filters: filters
+    )
+  end
+
+  def option_value_variant(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/option_value_variants/#{id}")
   end
 
   def books(filters: {})
@@ -92,12 +112,20 @@ class ApiClient
     fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/products/#{id}")
   end
 
+  def category(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/category/#{id}")
+  end
+
   def categories(filters: {})
     fetch_collection(
       method: :get,
       url: "#{BOOKSTORE_SERVICE_URL}/api/v1/categories",
       filters: filters
     )
+  end
+
+  def variant(id)
+    fetch("#{BOOKSTORE_SERVICE_URL}/api/v1/variants/#{id}")
   end
 
   def variants(filters: {})
@@ -114,10 +142,10 @@ class ApiClient
     response = self.class.get(url, headers: headers)
     parsed_response = JSON.parse(response.body)
 
-    result = if parsed_response['data'].is_a?(Array)
-      parsed_response['data'].first
+    result = if parsed_response["data"].is_a?(Array)
+      parsed_response["data"].first
     else
-      parsed_response['data']
+      parsed_response["data"]
     end
 
     normalize_json_api_object(result)
@@ -126,7 +154,7 @@ class ApiClient
   def fetch_collection(method:, url:, filters: {})
     query = {filter: filters.keep_if { |_, value| value.present? }}
     query.delete(:filter) if query[:filter].empty?
-    options = { query: query, headers: headers }
+    options = {query: query, headers: headers}
     response = self.class.get(url, options)
 
     parsed_response = JSON.parse(response.body)
