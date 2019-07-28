@@ -5,7 +5,8 @@ module Types
     field :id, ID, null: false
     field :name, String, null: false
     field :price, String, null: true
-    field :sku, Integer, null: true
+    field :sku, String, null: true
+    field :product_id, Integer, null: true
     field :position, String, null: true
     field :description, String, null: true
     field :created_at, String, null: true
