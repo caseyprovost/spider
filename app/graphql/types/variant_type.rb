@@ -20,7 +20,6 @@ module Types
     field :option_value_variants, [Types::OptionValueVariantType], null: true
 
     def product
-      raise "no product id" if object["product_id"].blank?
       api_client.product(object["product_id"])
     end
 
