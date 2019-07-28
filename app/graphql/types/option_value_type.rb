@@ -5,6 +5,7 @@ module Types
     field :id, ID, null: false
     field :position, String, null: false
     field :name, String, null: true
+    field :option_type_id, Integer, null: false
     field :created_at, String, null: true
     field :updated_at, String, null: true
 

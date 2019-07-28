@@ -1,13 +1,13 @@
 module Types
-  class ProductOptionType < Types::BaseObject
+  class ProductCategoryType < Types::BaseObject
     field :id, ID, null: false
-    field :option_type_id, Integer, null: false
     field :product_id, Integer, null: false
-    field :option_type, Types::OptionType, null: false
+    field :category_id, Integer, null: false
+    field :category, Types::CategoryType, null: false
     field :product, Types::ProductType, null: false
 
-    def option_type
-      api_client(context[:jwt_token]).option_type(object["option_type_id"])
+    def category
+      api_client(context[:jwt_token]).category(object["category_id"])
     end
 
     def product

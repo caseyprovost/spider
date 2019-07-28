@@ -5,6 +5,7 @@ module Types
     field :id, ID, null: false
     field :quantity, String, null: false
     field :price, String, null: true
+    field :order_id, Integer, null: false
     field :created_at, String, null: true
     field :updated_at, String, null: true
 
