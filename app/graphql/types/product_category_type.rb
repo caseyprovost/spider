@@ -7,17 +7,17 @@ module Types
     field :product, Types::ProductType, null: false
 
     def category
-      api_client(context[:jwt_token]).category(object["category_id"])
+      api_client.categories.fetch(object["category_id"])
     end
 
     def product
-      api_client(context[:jwt_token]).product(object["product_id"])
+      api_client.products.fetch(object["product_id"])
     end
 
     private
 
-    def api_client(jwt_token)
-      ApiClient.new(jwt_token)
+    def api_client
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

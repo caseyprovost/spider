@@ -13,33 +13,33 @@ module Types
 
     def variants
       filters = {product_id: object["id"]}
-      api_client(context[:jwt_token]).variants(filters: filters)
+      api_client.variants.list(filters: filters)
     end
 
     def categories
       filters = {product_id: object["id"]}
-      api_client(context[:jwt_token]).categories(filters: filters)
+      api_client.categories.list(filters: filters)
     end
 
     def properties
       filters = {product_id: object["id"]}
-      api_client(context[:jwt_token]).properties(filters: filters)
+      api_client.properties.list(filters: filters)
     end
 
     def product_properties
       filters = {product_id: object["id"]}
-      api_client(context[:jwt_token]).product_properties(filters: filters)
+      api_client.product_properties.list(filters: filters)
     end
 
     def option_types
       filters = {product_id: object["id"]}
-      api_client(context[:jwt_token]).option_types(filters: filters)
+      api_client.option_types.list(filters: filters)
     end
 
     private
 
-    def api_client(jwt_token)
-      ApiClient.new(jwt_token)
+    def api_client
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

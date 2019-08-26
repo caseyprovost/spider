@@ -15,18 +15,18 @@ module Types
 
     def line_items
       filters = {order_id: object["id"]}
-      api_client.line_items(filters: filters)
+      api_client.line_items.list(filters: filters)
     end
 
     def variant
       filters = {order_id: object["id"]}
-      api_client.variants(filters: filters)
+      api_client.variants.list(filters: filters)
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new(context[:jwt_token])
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

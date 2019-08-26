@@ -20,38 +20,38 @@ module Types
     field :option_value_variants, [Types::OptionValueVariantType], null: true
 
     def product
-      api_client.product(object["product_id"])
+      api_client.products.fetch(object["product_id"])
     end
 
     def line_items
       filters = {variant_id: object["id"]}
-      api_client.line_items(filters: filters)
+      api_client.line_items.list(filters: filters)
     end
 
     def option_value_variants
       filters = {variant_id: object["id"]}
-      api_client.option_value_variants(filters: filters)
+      api_client.option_value_variants.list(filters: filters)
     end
 
     def option_values
       filters = {variant_id: object["id"]}
-      api_client.option_values(filters: filters)
+      api_client.option_values.list(filters: filters)
     end
 
     def orders
       filters = {variant_id: object["id"]}
-      api_client.orders(filters: filters)
+      api_client.orders.list(filters: filters)
     end
 
     def option_types
       filters = {variant_id: object["id"]}
-      api_client.option_types(filters: filters)
+      api_client.option_types.list(filters: filters)
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new(context[:jwt_token])
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

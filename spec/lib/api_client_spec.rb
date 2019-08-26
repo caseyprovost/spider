@@ -3,7 +3,7 @@
 require "rails_helper"
 require "webmock/rspec"
 
-RSpec.describe ApiClient do
+RSpec.describe ApiClient::Client do
   include ApiMocking
 
   let(:auth_token) { "Bearer SomeToken" }
@@ -11,59 +11,35 @@ RSpec.describe ApiClient do
   let(:json_response) { JSON.parse(response.parsed_response) }
 
   describe "#books" do
-    let(:response) { client.books }
+    let(:resource) { client.books }
 
-    context "when the client is already authorized" do
-      before { mock_books(auth_token) }
-
-      it "returns the available books" do
-        expect(response).to be_an_instance_of(Array)
-        response.each do |item|
-          expect(item["id"]).to be_present
-          expect(item).to have_key("title")
-          expect(item).to have_key("publication_date")
-          expect(item).to have_key("page_count")
-          expect(item).to have_key("created_at")
-          expect(item).to have_key("updated_at")
-        end
-      end
+    it "returns the proper resource" do
+      expect(resource).to be_an_instance_of(ApiClient::Resource)
+      expect(resource.url).to eq(ENV["BOOKSHELF_API_URL"])
+      expect(resource.path).to eq("v1/books")
+      expect(resource.jwt_token).to be_present
     end
   end
 
   describe "#authors" do
-    let(:response) { client.authors }
+    let(:resource) { client.authors }
 
-    context "when the client is already authorized" do
-      before { mock_authors(auth_token) }
-
-      it "returns the available authors" do
-        expect(response).to be_an_instance_of(Array)
-        response.each do |item|
-          expect(item["id"]).to be_present
-          expect(item).to have_key("name")
-          expect(item).to have_key("bio")
-          expect(item).to have_key("date_of_birth")
-          expect(item).to have_key("hometown")
-        end
-      end
+    it "returns the proper resource" do
+      expect(resource).to be_an_instance_of(ApiClient::Resource)
+      expect(resource.url).to eq(ENV["AUTHOR_API_URL"])
+      expect(resource.path).to eq("v1/authors")
+      expect(resource.jwt_token).to be_present
     end
   end
 
   describe "#publishers" do
-    let(:response) { client.publishers }
+    let(:resource) { client.publishers }
 
-    context "when the client is already authorized" do
-      before { mock_publishers(auth_token) }
-
-      it "returns the available publishers" do
-        expect(response).to be_an_instance_of(Array)
-        response.each do |item|
-          expect(item["id"]).to be_present
-          expect(item).to have_key("name")
-          expect(item).to have_key("description")
-          expect(item).to have_key("uuid")
-        end
-      end
+    it "returns the proper resource" do
+      expect(resource).to be_an_instance_of(ApiClient::Resource)
+      expect(resource.url).to eq(ENV["PUBLISHER_API_URL"])
+      expect(resource.path).to eq("v1/publishers")
+      expect(resource.jwt_token).to be_present
     end
   end
 end

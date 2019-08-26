@@ -14,28 +14,28 @@ module Types
     field :variants, [Types::VariantType], null: false
 
     def option_type
-      api_client.option_type(object["option_type_id"])
+      api_client.option_types.fetch(object["option_type_id"])
     end
 
     def order_value_variants
       filters = {order_value_id: object["id"]}
-      api_client.order_value_variants(filters: filters)
+      api_client.order_value_variants.list(filters: filters)
     end
 
     def variants
       filters = {order_value_id: object["id"]}
-      api_client.variants(filters: filters)
+      api_client.variants.list(filters: filters)
     end
 
     def product_option_types
       filters = {order_value_id: object["id"]}
-      api_client.product_option_types(filters: filters)
+      api_client.product_option_types.list(filters: filters)
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new(context[:jwt_token])
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

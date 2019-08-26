@@ -78,71 +78,71 @@ module Types
     end
 
     def author(id:)
-      api_client.author(id)
+      api_client.authors.fetch(id)
     end
 
     def product(id:)
-      api_client.product(id)
+      api_client.products.fetch(id)
     end
 
     def books
-      api_client.books
+      api_client.books.list
     end
 
     def authors
-      api_client.authors
+      api_client.authors.list
     end
 
     def publishers
-      api_client.publishers
+      api_client.publishers.list
     end
 
     def products(category_id: nil)
-      api_client.products(filters: {
+      api_client.products.list(filters: {
         category_id: category_id,
       })
     end
 
     def variant(id:)
-      api_client.variant(id)
+      api_client.variants.fetch(id)
     end
 
     def variants
-      api_client.variants
+      api_client.variants.list
     end
 
     def category(id:)
-      api_client.category(id)
+      api_client.categories.fetch(id)
     end
 
     def categories
-      api_client.categories
+      api_client.categories.list
     end
 
     def property(id:)
-      api_client.property(id)
+      api_client.properties.fetch(id)
     end
 
     def properties
-      api_client.properties
+      api_client.properties.list
     end
 
     def product_properties
-      api_client.product_properties
+      api_client.product_properties.list
     end
 
     def option_types
-      api_client.option_types
+      api_client.option_types.list
     end
 
     def product_option_types
-      api_client.product_option_types
+      api_client.product_option_types.list
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new(context[:jwt_token])
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

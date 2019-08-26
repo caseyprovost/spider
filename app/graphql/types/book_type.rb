@@ -11,17 +11,17 @@ module Types
     field :author, Types::AuthorType, null: false
 
     def author
-      api_client.author(object["author_uuid"])
+      api_client.authors.fetch(object["author_uuid"])
     end
 
     def publisher
-      api_client.publisher(object["publisher_uuid"])
+      api_client.publishers.fetch(object["publisher_uuid"])
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new(context[:jwt_token])
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end

@@ -13,17 +13,17 @@ module Types
     field :variant, Types::VariantType, null: false
 
     def option_value
-      api_client.option_value(object["option_value_id"])
+      api_client.option_values.fetch(object["option_value_id"])
     end
 
     def variant
-      api_client.variant(object["variant_id"])
+      api_client.variants.fetch(object["variant_id"])
     end
 
     private
 
     def api_client
-      @api_client ||= ApiClient.new(context[:jwt_token])
+      @api_client ||= ApiClient::Client.new(context[:jwt_token])
     end
   end
 end
