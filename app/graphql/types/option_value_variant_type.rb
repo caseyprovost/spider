@@ -16,7 +16,6 @@ module Types
       api_client.option_value(object["option_value_id"])
     end
 
-
     def variant
       api_client.variant(object["variant_id"])
     end
